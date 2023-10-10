@@ -1,0 +1,27 @@
+name: Rancher1 Webhook Action
+description: Github Action to call webhooks on Rancher1
+inputs:
+  host:
+    description: Rancher host (protocol and domain)
+    required: true
+  projectId:
+    description: Rancher project ID
+    required: true
+  key:
+    description: Webhook key in project
+    required: true
+  image:
+    description: Docker image to deploy
+    required: true
+  tag:
+    description: Docker tag of image to be deployed
+    required: true
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.host }}
+    - ${{ inputs.projectId }}
+    - ${{ inputs.key }}
+    - ${{ inputs.image }}
+    - ${{ inputs.tag }}
