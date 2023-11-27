@@ -27,9 +27,9 @@ http_status_code=$(curl \
     }
 }')
 
-status=$?
+curl_exit_code=$?
 
-if [ $status -eq 0 ]; then
+if [ $curl_exit_code -eq 0 ]; then
     echo "curl was successful."
     if expr "${http_status_code}" : '[45]..$' 1>/dev/null; then
         echo "Webhook failed with status code ${http_status_code}."
@@ -37,5 +37,5 @@ if [ $status -eq 0 ]; then
         echo "Webhook was triggered successfully."
     fi
 else
-    echo "curl failed with status code $status."
+    echo "curl failed with exit code $curl_exit_code."
 fi
