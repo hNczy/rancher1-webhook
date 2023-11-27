@@ -11,25 +11,31 @@ key=$3
 image=$4
 tag=$5
 
-curl \
---silent \
---output /dev/null \
---location "$host/v1-webhooks/endpoint?key=$key&projectId=$projectId" \
---header 'Content-Type: application/json' \
---header 'Cookie: PL=rancher' \
---data '{
+http_status_code=$(curl \
+  --silent \
+  --output /dev/null \
+  --write-out '%{http_code}' \
+  --location "$host/v1-webhooks/endpoint?key=$key&projectId=$projectId" \
+  --header 'Content-Type: application/json' \
+  --header 'Cookie: PL=rancher' \
+  --data '{
     "push_data": {
         "tag": "'"$tag"'"
     },
     "repository": {
         "repo_name": "'"$image"'"
     }
-}'
+}')
 
-status=$?
+curl_exit_code=$?
 
-if [ $status -eq 0 ]; then
-    echo "curl was successful (HTTP Status 200 OK)."
+if [ $curl_exit_code -eq 0 ]; then
+    echo "curl was successful."
+    if expr "${http_status_code}" : '[45]..$' 1>/dev/null; then
+        echo "Webhook failed with status code ${http_status_code}."
+    else
+        echo "Webhook was triggered successfully."
+    fi
 else
-    echo "curl failed with status code $status."
+    echo "curl failed with exit code $curl_exit_code."
 fi
