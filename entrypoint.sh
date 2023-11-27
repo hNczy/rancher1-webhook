@@ -12,7 +12,7 @@ image=$4
 tag=$5
 
 curl \
--s \
+--silent \
 -o /dev/null \
 --location "$host/v1-webhooks/endpoint?key=$key&projectId=$projectId" \
 --header 'Content-Type: application/json' \
