@@ -13,7 +13,7 @@ tag=$5
 
 curl \
 --silent \
--o /dev/null \
+--output /dev/null \
 --location "$host/v1-webhooks/endpoint?key=$key&projectId=$projectId" \
 --header 'Content-Type: application/json' \
 --header 'Cookie: PL=rancher' \
