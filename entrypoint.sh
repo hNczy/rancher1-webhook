@@ -1,21 +1,25 @@
 #!/bin/sh -l
 
 if [ $# -lt 5 ]; then
-    echo "Usage: $0 <host> <projectId> <key> <image> <tag>"
+    echo "Usage: $0 <host> <projectId> <key> <image> <tag> <extraHeaders>"
     exit 1
 fi
+
+set -ex
 
 host=$1
 projectId=$2
 key=$3
 image=$4
 tag=$5
+extraHeaders=$6
 
 http_status_code=$(curl \
   --silent \
   --output /dev/null \
   --write-out '%{http_code}' \
   --location "$host/v1-webhooks/endpoint?key=$key&projectId=$projectId" \
+  --header "${extraHeaders}" \
   --header 'Content-Type: application/json' \
   --header 'Cookie: PL=rancher' \
   --data '{

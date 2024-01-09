@@ -16,6 +16,9 @@ inputs:
   tag:
     description: Docker tag of image to be deployed
     required: true
+  extraHeaders:
+    description: Extra headers for the curl call
+    required: true
 runs:
   using: docker
   image: Dockerfile
@@ -25,3 +28,4 @@ runs:
     - ${{ inputs.key }}
     - ${{ inputs.image }}
     - ${{ inputs.tag }}
+    - ${{ inputs.extraHeaders }}
