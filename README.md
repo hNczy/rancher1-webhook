@@ -18,6 +18,9 @@ Github Action for calling Rancher 1 webhook
 ### `tag`
 **Required** Docker tag of image to be deployed
 
+### `extraHeaders`
+**Optional** Additional headers to use in the Curl call. Value can be simple or multiline.
+
 ## Outputs
 
 None
@@ -32,4 +35,7 @@ with:
     key: AbCdEfGhIjKlMnOpQrStUvWxYz0123456789
     image: alpine
     tag: stable
+    extraHeaders: |
+      foo: bar
+      baz: bak
 ```
